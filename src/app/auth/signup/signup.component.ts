@@ -10,6 +10,7 @@ export class SignupComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
+    // On definit l'age minimum a 18 ans
     this.maxDate = new Date();
     this.maxDate.setFullYear(this.maxDate.getFullYear() - 18);
   }
