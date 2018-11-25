@@ -2,7 +2,7 @@
   <form
     fxLayout="column"
     fxLayoutAlign="center center"
-    fxLayoutGap="gappx"
+    fxLayoutGap="16px"
     #f="ngForm"
     (ngSubmit)="onSubmit(f)"
   >
@@ -37,10 +37,11 @@
       <mat-hint>Should be at leat 6 characters long</mat-hint>
     </mat-form-field>
     <mat-form-field>
-      <input matInput [matDatepicker]="picker" [max]="maxDate" placeholder="Your Birthdate" />
+      <input matInput [matDatepicker]="picker" [max]="maxDate" placeholder="birthdate" />
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
+    <mat-checkbox>Agree to conditions.</mat-checkbox>
 
     <button type="submit" mat-raised-button>Submit</button>
   </form>
