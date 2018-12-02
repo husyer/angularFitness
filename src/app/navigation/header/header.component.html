@@ -21,7 +21,7 @@
       class="navigation-items"
       *ngIf="isAuth"
     >
-      <li><a [routerLink]="['/Logout']">Login</a></li>
+      <li><a [routerLink]="['/Logout']" (click)="onLogout()">Logout</a></li>
       <li><a [routerLink]="['/training']">Training</a></li>
     </ul>
   </div>

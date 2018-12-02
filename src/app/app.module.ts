@@ -33,7 +33,8 @@ import { AuthService } from './auth/auth-service';
     WelcomeComponent,
     HeaderComponent,
     SidenavListComponent,
-    StopTrainingComponent
+    StopTrainingComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -42,7 +43,8 @@ import { AuthService } from './auth/auth-service';
     MaterialModule,
     FlexLayoutModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+
   ],
   providers: [AuthService],
   bootstrap: [AppComponent],
