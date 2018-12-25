@@ -4,8 +4,9 @@ import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { auth } from 'firebase';
 import { TrainingService } from '../training/training.service';
+import { MatSnackBar } from '@angular/material';
+import { UIService } from './shared/ui.service';
 
 @Injectable()
 export class AuthService {
@@ -16,22 +17,51 @@ export class AuthService {
   constructor(
     private router: Router,
     private _auth: AngularFireAuth,
-    private _trainingService: TrainingService
+    private _trainingService: TrainingService,
+    private _matSnackBar: MatSnackBar,
+    private _uiService: UIService
   ) {}
 
+  initAuthListener() {
+    this._auth.authState.subscribe(user => {
+      if (user) {
+        this._isAuth = true;
+        this.authChange.next(true);
+        this.router.navigate(['/training']);
+      } else {
+        this._trainingService.cancelSuscription();
+        this._auth.auth.signOut();
+        this._isAuth = false;
+        this.authChange.next(false);
+      }
+    });
+  }
+
   registerUser(authData: AuthData) {
+    this._uiService.loadingStateChanged.next(true);
     this._auth.auth
       .createUserWithEmailAndPassword(authData.email, authData.password)
       .then(result => {
-        this.authSucess();
+        this._uiService.loadingStateChanged.next(false);
+      })
+      .catch(err => {
+        this._matSnackBar.open(err.message, null, {
+          duration: 3000
+        });
       });
   }
 
   login(authData: AuthData) {
+    this._uiService.loadingStateChanged.next(true);
     this._auth.auth
       .signInWithEmailAndPassword(authData.email, authData.password)
       .then(result => {
-        this.authSucess();
+        this._uiService.loadingStateChanged.next(false);
+      })
+      .catch(err => {
+        this._matSnackBar.open(err.message, null, {
+          duration: 3000
+        });
       });
   }
   logout() {
@@ -45,10 +75,5 @@ export class AuthService {
   }
   isAuth() {
     return this._isAuth;
-  }
-  authSucess() {
-    this._isAuth = true;
-    this.authChange.next(true);
-    this.router.navigate(['/training']);
   }
 }

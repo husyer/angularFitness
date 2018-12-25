@@ -43,6 +43,7 @@
     </mat-form-field>
     <mat-checkbox>Agree to conditions.</mat-checkbox>
 
-    <button type="submit" mat-raised-button>Submit</button>
+    <button *ngIf="!isLoading" type="submit" mat-raised-button>Submit</button>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
   </form>
 </section>

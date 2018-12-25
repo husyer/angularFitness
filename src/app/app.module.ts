@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { RequestInterceptor } from './services/http_interceptor';
 
 import { AppComponent } from './app.component';
 import { ProductsComponent } from './products/products.component';
@@ -24,6 +26,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
+import { UIService } from './auth/shared/ui.service';
 
 @NgModule({
   declarations: [
@@ -38,8 +41,7 @@ import { environment } from '../environments/environment';
     WelcomeComponent,
     HeaderComponent,
     SidenavListComponent,
-    StopTrainingComponent,
-
+    StopTrainingComponent
   ],
   imports: [
     BrowserModule,
@@ -51,10 +53,14 @@ import { environment } from '../environments/environment';
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireAuthModule
-
+    AngularFireAuthModule,
+    HttpClientModule
   ],
-  providers: [AuthService, TrainingService],
+  providers: [
+    AuthService,
+    TrainingService,
+    UIService
+  ],
   bootstrap: [AppComponent],
   entryComponents: [StopTrainingComponent]
 })
